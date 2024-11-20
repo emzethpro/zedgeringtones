@@ -1,204 +1,190 @@
-RTA Dubai Bus Journey Planner API
-^^^^^^^^
-Overview
+============================
+Zedge Ringtones User Guide
+============================
 
-The `RTA Dubai Bus Journey Planner API <https://www.rta.ae/wps/portal/rta/ae/public-transport/journeyplanner>`_ provides access to real-time bus schedules and timetables for Dubai's public transportation system. This documentation outlines the available endpoints, request parameters, and response formats for accessing bus timing information.
-
-Retrieves the timetable for a specific bus route.
-
-Endpoint
-^^^^^^^^
-::
-
-    GET /DownloadTimetableServlet
-
-Query Parameters
-^^^^^^^^^^^^^^^
-
-.. list-table::
-   :header-rows: 1
-   :widths: 15 10 10 45 20
-
-   * - Parameter
-     - Type
-     - Required
-     - Description
-     - Example
-   * - lineId
-     - string
-     - Yes
-     - Unique identifier for the bus route
-     - dub:01SH1:%20:H:y08
-   * - lineName
-     - string
-     - Yes
-     - Display name of the bus route
-     - bus%20SH1
-
-Route ID Format
-^^^^^^^^^^^^^^
-The ``lineId`` parameter follows this format: ``dub:{route_code}:%20:H:y08``
-
-* ``dub``: City identifier for Dubai
-* ``route_code``: Specific code for the bus route
-* ``:%20:H:y08``: System-specific suffix
-
-Available Routes
-^^^^^^^^^^^^^^
-
-.. list-table::
-   :header-rows: 1
-   :widths: 10 30 20 40
-
-   * - Route
-     - Line ID
-     - Line Name
-     - Description
-   * - SH1
-     - dub:01SH1:%20:H:y08
-     - bus%20SH1
-     - SH1 Route Service
-   * - D03
-     - dub:01D03:%20:H:y08
-     - bus%20D03
-     - D03 Route Service
-   * - E411
-     - dub:10411:%20:H:y08
-     - bus%20E411
-     - E411 Route Service
-   * - F62
-     - dub:12F62:%20:H:y08
-     - bus%20F62
-     - F62 Route Service
-
-Example Request
-^^^^^^^^^^^^^
-.. code-block:: bash
-
-    curl -X GET "https://www.rta.ae/wps/PA_JourneyPlanner/DownloadTimetableServlet?lineId=dub:01SH1:%20:H:y08&lineName=bus%20SH1"
-
-Response
-^^^^^^^^
-The API returns a timetable document containing the bus schedule information.
-
-Response Headers
-^^^^^^^^^^^^^^^
-::
-
-    Content-Type: application/pdf
-
-Error Codes
-^^^^^^^^^^
-
-.. list-table::
-   :header-rows: 1
-   :widths: 20 80
-
-   * - Status Code
-     - Description
-   * - 200
-     - Success - Timetable retrieved successfully
-   * - 400
-     - Bad Request - Invalid parameters
-   * - 404
-     - Not Found - Route not found
-   * - 500
-     - Internal Server Error - Server-side error occurred
-
-Best Practices
--------------
-1. Cache the timetable responses when possible to reduce server load
-2. Implement error handling for failed requests
-3. Include proper timeout handling in your implementation
-4. Use URL encoding for the lineName parameter
-
-Rate Limiting
+Introduction
 ------------
-* Default rate limit: Not specified
-* It's recommended to implement reasonable request intervals to avoid overloading the server
+This guide explains how to use Zedge Ringtones, a popular platform for downloading custom ringtones, notifications sounds, wallpapers, and other personalization content for your mobile device.
 
-Notes
------
-1. The timetable data is provided in PDF format
-2. Timetables may be updated periodically by RTA
-3. All times are in Gulf Standard Time (GST/UTC+4)
-4. Service availability may vary during holidays and special events
+System Requirements
+------------------
+- Android 5.0 or higher
+- iOS 11.0 or later
+- Stable internet connection
+- Minimum 50MB free storage space
 
-Example Implementation
----------------------
+Installation
+------------
+Android
+^^^^^^^
+1. Open Google Play Store
+2. Search for "Zedge Ringtones"
+3. Tap "Install"
+4. Grant required permissions when prompted
 
-JavaScript
-~~~~~~~~~~
-.. code-block:: javascript
+iOS
+^^^
+1. Open App Store
+2. Search for "Zedge Ringtones"
+3. Tap "Get"
+4. Authenticate with Face ID/Touch ID if required
 
-    async function getRTABusTimetable(routeCode, routeName) {
-      try {
-        const baseUrl = 'https://www.rta.ae/wps/PA_JourneyPlanner/DownloadTimetableServlet';
-        const lineId = `dub:${routeCode}:%20:H:y08`;
-        const lineName = `bus%20${routeName}`;
-        
-        const response = await fetch(
-          `${baseUrl}?lineId=${lineId}&lineName=${lineName}`,
-          {
-            method: 'GET',
-            headers: {
-              'Accept': 'application/pdf'
-            }
-          }
-        );
+Basic Usage
+-----------
 
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
+Finding Content
+^^^^^^^^^^^^^^
+1. Open the Zedge app
+2. Use the bottom navigation bar to select content type:
+   
+   * Ringtones
+   * Wallpapers
+   * Live Wallpapers
+   * Notification Sounds
+   * Alarms
 
-        const pdfBlob = await response.blob();
-        return pdfBlob;
-      } catch (error) {
-        console.error('Error fetching timetable:', error);
-        throw error;
-      }
-    }
+2. Browse categories or use the search bar
+3. Tap on any item to preview
 
-Python
-~~~~~~
-.. code-block:: python
+Downloading Content
+^^^^^^^^^^^^^^^^^
+1. Find desired content
+2. Tap the download button (arrow pointing down)
+3. Wait for download to complete
+4. Content will be saved to your device
 
-    import requests
+Setting Ringtones (Android)
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+1. Download desired ringtone
+2. Tap "Set as" button
+3. Choose from options:
+   
+   * Phone ringtone
+   * Contact ringtone
+   * Notification sound
+   * Alarm sound
 
-    def get_rta_bus_timetable(route_code, route_name):
-        base_url = 'https://www.rta.ae/wps/PA_JourneyPlanner/DownloadTimetableServlet'
-        
-        params = {
-            'lineId': f'dub:{route_code}:%20:H:y08',
-            'lineName': f'bus%20{route_name}'
-        }
-        
-        try:
-            response = requests.get(base_url, params=params)
-            response.raise_for_status()
-            
-            return response.content
-        except requests.exceptions.RequestException as e:
-            print(f"Error fetching timetable: {e}")
-            raise
+4. Confirm selection
 
-    # Example usage
-    try:
-        pdf_content = get_rta_bus_timetable('01SH1', 'SH1')
-        with open('timetable.pdf', 'wb') as f:
-            f.write(pdf_content)
-    except Exception as e:
-        print(f"Failed to download timetable: {e}")
+Setting Ringtones (iOS)
+^^^^^^^^^^^^^^^^^^^^^^
+1. Download desired ringtone
+2. Open Settings app
+3. Go to Sounds & Haptics
+4. Select ringtone category
+5. Choose downloaded ringtone from list
 
-Support and Feedback
--------------------
-For technical support or API-related questions, please contact RTA's technical support team.
+Managing Downloads
+----------------
+View Downloads
+^^^^^^^^^^^^^
+1. Tap profile icon
+2. Select "My Downloads"
+3. View all downloaded content by category
+
+Delete Downloads
+^^^^^^^^^^^^^^^
+1. Go to "My Downloads"
+2. Long press item to select
+3. Tap delete icon
+4. Confirm deletion
+
+Premium Features
+---------------
+Premium Subscription Benefits
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+* Ad-free experience
+* Exclusive content access
+* Higher quality downloads
+* Priority updates
+
+Subscribing to Premium
+^^^^^^^^^^^^^^^^^^^^
+1. Tap profile icon
+2. Select "Go Premium"
+3. Choose subscription plan:
+   
+   * Monthly
+   * Annual (save %)
+
+4. Complete payment process
+
+Troubleshooting
+--------------
+Common Issues
+^^^^^^^^^^^^
+Download Failures
+"""""""""""""""
+* Check internet connection
+* Ensure sufficient storage space
+* Try closing and reopening app
+
+Content Not Showing
+"""""""""""""""""
+* Update app to latest version
+* Clear app cache
+* Check internet connection
+
+Setting Ringtone Failed
+""""""""""""""""""""""
+* Ensure proper permissions granted
+* Restart device
+* Reinstall app if issue persists
+
+Tips and Best Practices
+----------------------
+1. Use Wi-Fi for large downloads
+2. Regular app updates recommended
+3. Back up favorite content
+4. Create collections for easy access
+5. Use preview before downloading
+
+Privacy and Permissions
+----------------------
+Required Permissions
+^^^^^^^^^^^^^^^^^^
+* Storage access
+* Network access
+* Phone settings (for ringtones)
+
+Optional Permissions
+^^^^^^^^^^^^^^^^^
+* Camera (for custom wallpapers)
+* Contacts (for contact-specific ringtones)
+
+Safety Tips
+^^^^^^^^^^
+* Download from official app only
+* Review app permissions regularly
+* Report inappropriate content
+* Use secure payment methods
+
+Support and Resources
+--------------------
+Getting Help
+^^^^^^^^^^^
+* In-app help center
+* Email support: support@zedge.net
+* FAQs section
+* Community forums
+
+Useful Links
+^^^^^^^^^^
+* Official website: https://www.zedge.net
+* Terms of Service
+* Privacy Policy
+* Content Guidelines
 
 Version History
 --------------
-* Current Version: 1.0
-* Last Updated: 2024
+Latest Version: [Current Version Number]
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+* New features
+* Bug fixes
+* Performance improvements
 
-Legal Notice
------------
-This API documentation is provided for informational purposes. Usage of the `RTA Dubai Bus Timing <https://uaetiming.com/your-complete-guide-to-rta-bus-routes-in-dubai/>`_ and Journey Planner API is subject to RTA's terms of service and data usage policies.
+Document Information
+------------------
+* Last Updated: [Date]
+* Version: 1.0
+* Author: [Author Name]
