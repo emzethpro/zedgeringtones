@@ -180,7 +180,7 @@ Useful Links
 
 Version History
 --------------
-Latest Version: [Current Version Number]
+Latest Version: [32.4.1]
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 * New features
 * Bug fixes
@@ -188,6 +188,6 @@ Latest Version: [Current Version Number]
 
 Document Information
 ------------------
-* Last Updated: [Date]
+* Last Updated: [20.11.2024]
 * Version: 1.0
-* Author: [Author Name]
+* Author: [Patrick, 2024]
